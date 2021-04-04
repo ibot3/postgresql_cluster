@@ -90,7 +90,7 @@
         line: "{{ item.line }}"
         backrefs: true
       loop:
-        - {regexp: '^.*bind.*:7000$', line: '    bind {{ hostvars[inventory_hostname].inventory_hostname }}:7000'}
+        - {regexp: '^.*bind.*:7000$', line: '    bind {{ hostvars[inventory_hostname].ansible_default_ipv4.address }}:7000'}
         - {regexp: '^.*bind.*:5000$', line: '    bind {{ cluster_vip }}:5000'}
         - {regexp: '^.*bind.*:5001$', line: '    bind {{ cluster_vip }}:5001'}
         - {regexp: '^.*bind.*:5002$', line: '    bind {{ cluster_vip }}:5002'}
@@ -107,11 +107,11 @@
         line: "{{ item.line }}"
         backrefs: true
       loop:
-        - {regexp: '^.*bind.*:7000$', line: '    bind {{ hostvars[inventory_hostname].inventory_hostname }}:7000'}
-        - {regexp: '^.*bind.*:5000$', line: '    bind {{ hostvars[inventory_hostname].inventory_hostname }}:5000'}
-        - {regexp: '^.*bind.*:5001$', line: '    bind {{ hostvars[inventory_hostname].inventory_hostname }}:5001'}
-        - {regexp: '^.*bind.*:5002$', line: '    bind {{ hostvars[inventory_hostname].inventory_hostname }}:5002'}
-        - {regexp: '^.*bind.*:5003$', line: '    bind {{ hostvars[inventory_hostname].inventory_hostname }}:5003'}
+        - {regexp: '^.*bind.*:7000$', line: '    bind {{ hostvars[inventory_hostname].ansible_default_ipv4.address }}:7000'}
+        - {regexp: '^.*bind.*:5000$', line: '    bind {{ hostvars[inventory_hostname].ansible_default_ipv4.address }}:5000'}
+        - {regexp: '^.*bind.*:5001$', line: '    bind {{ hostvars[inventory_hostname].ansible_default_ipv4.address }}:5001'}
+        - {regexp: '^.*bind.*:5002$', line: '    bind {{ hostvars[inventory_hostname].ansible_default_ipv4.address }}:5002'}
+        - {regexp: '^.*bind.*:5003$', line: '    bind {{ hostvars[inventory_hostname].ansible_default_ipv4.address }}:5003'}
       loop_control:
         label: "{{ item.line }}"
       notify: "restart confd"

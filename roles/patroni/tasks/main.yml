@@ -286,10 +286,10 @@
         backrefs: true
       loop:
         - {regexp: '^name:', line: 'name: {{ ansible_hostname }}'}
-        - {regexp: '^  listen: .*:8008$', line: '  listen: {{ hostvars[inventory_hostname].inventory_hostname }}:8008'}
-        - {regexp: '^  connect_address: .*:8008$', line: '  connect_address: {{ hostvars[inventory_hostname].inventory_hostname }}:8008'}
-        - {regexp: '^  listen: ((?!8008).)*$', line: '  listen: {{ hostvars[inventory_hostname].inventory_hostname }},127.0.0.1:{{ postgresql_port }}'}
-        - {regexp: '^  connect_address: ((?!8008).)*$', line: '  connect_address: {{ hostvars[inventory_hostname].inventory_hostname }}:{{ postgresql_port }}'}
+        - {regexp: '^  listen: .*:8008$', line: '  listen: {{ hostvars[inventory_hostname].ansible_default_ipv4.address }}:8008'}
+        - {regexp: '^  connect_address: .*:8008$', line: '  connect_address: {{ hostvars[inventory_hostname].ansible_default_ipv4.address }}:8008'}
+        - {regexp: '^  listen: ((?!8008).)*$', line: '  listen: {{ hostvars[inventory_hostname].ansible_default_ipv4.address }},127.0.0.1:{{ postgresql_port }}'}
+        - {regexp: '^  connect_address: ((?!8008).)*$', line: '  connect_address: {{ hostvars[inventory_hostname].ansible_default_ipv4.address }}:{{ postgresql_port }}'}
       loop_control:
         label: "{{ item.line }}"
       when: with_haproxy_load_balancing|bool or pgbouncer_install|bool or (cluster_vip is not defined or cluster_vip | length < 1)
@@ -302,10 +302,10 @@
         backrefs: true
       loop:
         - {regexp: '^name:', line: 'name: {{ ansible_hostname }}'}
-        - {regexp: '^  listen: .*:8008$', line: '  listen: {{ hostvars[inventory_hostname].inventory_hostname }}:8008'}
-        - {regexp: '^  connect_address: .*:8008$', line: '  connect_address: {{ hostvars[inventory_hostname].inventory_hostname }}:8008'}
-        - {regexp: '^  listen: ((?!8008).)*$', line: '  listen: {{ hostvars[inventory_hostname].inventory_hostname }},{{ cluster_vip }},127.0.0.1:{{ postgresql_port }}'}  # noqa 204
-        - {regexp: '^  connect_address: ((?!8008).)*$', line: '  connect_address: {{ hostvars[inventory_hostname].inventory_hostname }}:{{ postgresql_port }}'}
+        - {regexp: '^  listen: .*:8008$', line: '  listen: {{ hostvars[inventory_hostname].ansible_default_ipv4.address }}:8008'}
+        - {regexp: '^  connect_address: .*:8008$', line: '  connect_address: {{ hostvars[inventory_hostname].ansible_default_ipv4.address }}:8008'}
+        - {regexp: '^  listen: ((?!8008).)*$', line: '  listen: {{ hostvars[inventory_hostname].ansible_default_ipv4.address }},{{ cluster_vip }},127.0.0.1:{{ postgresql_port }}'}  # noqa 204
+        - {regexp: '^  connect_address: ((?!8008).)*$', line: '  connect_address: {{ hostvars[inventory_hostname].ansible_default_ipv4.address }}:{{ postgresql_port }}'}
       loop_control:
         label: "{{ item.line }}"
       when: not with_haproxy_load_balancing|bool and not pgbouncer_install|bool and (cluster_vip is defined and cluster_vip | length > 0)

@@ -133,7 +133,7 @@
         line: "{{ item.line }}"
         backrefs: true
       loop:
-        - {regexp: '^listen_addr =', line: 'listen_addr = {{ hostvars[inventory_hostname].inventory_hostname }}'}
+        - {regexp: '^listen_addr =', line: 'listen_addr = {{ hostvars[inventory_hostname].ansible_default_ipv4.address }}'}
       loop_control:
         label: "{{ item.line }}"
       notify: "restart pgbouncer"
@@ -147,7 +147,7 @@
         line: "{{ item.line }}"
         backrefs: true
       loop:
-        - {regexp: '^listen_addr =', line: 'listen_addr = {{ hostvars[inventory_hostname].inventory_hostname }},{{ cluster_vip }}'}
+        - {regexp: '^listen_addr =', line: 'listen_addr = {{ hostvars[inventory_hostname].ansible_default_ipv4.address }},{{ cluster_vip }}'}
       loop_control:
         label: "{{ item.line }}"
       notify: "restart pgbouncer"

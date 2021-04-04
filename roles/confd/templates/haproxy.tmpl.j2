@@ -21,7 +21,7 @@ defaults
      
 listen stats
     mode http
-    bind {{ hostvars[inventory_hostname]['inventory_hostname'] }}:7000
+    bind {{ hostvars[inventory_hostname]['ansible_default_ipv4'].address }}:7000
     stats enable
     stats uri /
  
@@ -29,7 +29,7 @@ listen master
 {% if cluster_vip is defined and cluster_vip | length > 0 %}
     bind {{ cluster_vip }}:5000
 {% else %}
-    bind {{ hostvars[inventory_hostname]['inventory_hostname'] }}:5000
+    bind {{ hostvars[inventory_hostname]['ansible_default_ipv4'].address }}:5000
 {% endif %}
     maxconn 10000
     option tcplog
@@ -50,7 +50,7 @@ listen replicas
 {% if cluster_vip is defined and cluster_vip | length > 0 %}
     bind {{ cluster_vip }}:5001
 {% else %}
-    bind {{ hostvars[inventory_hostname]['inventory_hostname'] }}:5001
+    bind {{ hostvars[inventory_hostname]['ansible_default_ipv4'].address }}:5001
 {% endif %}
     maxconn 10000
     option tcplog
@@ -72,7 +72,7 @@ listen replicas_sync
 {% if cluster_vip is defined and cluster_vip | length > 0 %}
     bind {{ cluster_vip }}:5002
 {% else %}
-    bind {{ hostvars[inventory_hostname]['inventory_hostname'] }}:5002
+    bind {{ hostvars[inventory_hostname]['ansible_default_ipv4'].address }}:5002
 {% endif %}
     maxconn 10000
     option tcplog
@@ -94,7 +94,7 @@ listen replicas_async
 {% if cluster_vip is defined and cluster_vip | length > 0 %}
     bind {{ cluster_vip }}:5003
 {% else %}
-    bind {{ hostvars[inventory_hostname]['inventory_hostname'] }}:5003
+    bind {{ hostvars[inventory_hostname]['ansible_default_ipv4'].address }}:5003
 {% endif %}
     maxconn 10000
     option tcplog

@@ -21,7 +21,7 @@ defaults
      
 listen stats
     mode http
-    bind {{ hostvars[inventory_hostname]['inventory_hostname'] }}:7000
+    bind {{ hostvars[inventory_hostname]['ansible_default_ipv4'].address }}:7000
     stats enable
     stats uri /
  
@@ -29,7 +29,7 @@ listen master
 {% if cluster_vip is defined and cluster_vip | length > 0 %}
     bind {{ cluster_vip }}:5000
 {% else %}
-    bind {{ hostvars[inventory_hostname]['inventory_hostname'] }}:5000
+    bind {{ hostvars[inventory_hostname]['ansible_default_ipv4'].address }}:5000
 {% endif %}
     maxconn 10000
     option tcplog
@@ -38,12 +38,12 @@ listen master
     default-server inter 3s fastinter 1s fall 3 rise 4 on-marked-down shutdown-sessions
 {% if pgbouncer_install|bool %}
   {% for host in groups['postgres_cluster'] %}
-server {{ hostvars[host]['ansible_hostname'] }} {{ hostvars[host]['inventory_hostname'] }}:{{ pgbouncer_listen_port }} check port 8008
+server {{ hostvars[host]['ansible_hostname'] }} {{ hostvars[host]['ansible_default_ipv4'].address }}:{{ pgbouncer_listen_port }} check port 8008
   {% endfor %}
 {% endif %}
 {% if ( pgbouncer_install is not defined ) or ( not pgbouncer_install|bool ) %}
   {% for host in groups['postgres_cluster'] %}
-server {{ hostvars[host]['ansible_hostname'] }} {{ hostvars[host]['inventory_hostname'] }}:{{ postgresql_port }} check port 8008
+server {{ hostvars[host]['ansible_hostname'] }} {{ hostvars[host]['ansible_default_ipv4'].address }}:{{ postgresql_port }} check port 8008
   {% endfor %}
 {% endif %}
 
@@ -51,7 +51,7 @@ listen replicas
 {% if cluster_vip is defined and cluster_vip | length > 0 %}
     bind {{ cluster_vip }}:5001
 {% else %}
-    bind {{ hostvars[inventory_hostname]['inventory_hostname'] }}:5001
+    bind {{ hostvars[inventory_hostname]['ansible_default_ipv4'].address }}:5001
 {% endif %}
     maxconn 10000
     option tcplog
@@ -61,12 +61,12 @@ listen replicas
     default-server inter 3s fastinter 1s fall 3 rise 2 on-marked-down shutdown-sessions
 {% if pgbouncer_install|bool %}
   {% for host in groups['postgres_cluster'] %}
-server {{ hostvars[host]['ansible_hostname'] }} {{ hostvars[host]['inventory_hostname'] }}:{{ pgbouncer_listen_port }} check port 8008
+server {{ hostvars[host]['ansible_hostname'] }} {{ hostvars[host]['ansible_default_ipv4'].address }}:{{ pgbouncer_listen_port }} check port 8008
   {% endfor %}
 {% endif %}
 {% if ( pgbouncer_install is not defined ) or ( not pgbouncer_install|bool ) %}
   {% for host in groups['postgres_cluster'] %}
-server {{ hostvars[host]['ansible_hostname'] }} {{ hostvars[host]['inventory_hostname'] }}:{{ postgresql_port }} check port 8008
+server {{ hostvars[host]['ansible_hostname'] }} {{ hostvars[host]['ansible_default_ipv4'].address }}:{{ postgresql_port }} check port 8008
   {% endfor %}
 {% endif %}
 
@@ -74,7 +74,7 @@ listen replicas_sync
 {% if cluster_vip is defined and cluster_vip | length > 0 %}
     bind {{ cluster_vip }}:5002
 {% else %}
-    bind {{ hostvars[inventory_hostname]['inventory_hostname'] }}:5002
+    bind {{ hostvars[inventory_hostname]['ansible_default_ipv4'].address }}:5002
 {% endif %}
     maxconn 10000
     option tcplog
@@ -84,12 +84,12 @@ listen replicas_sync
     default-server inter 3s fastinter 1s fall 3 rise 2 on-marked-down shutdown-sessions
 {% if pgbouncer_install|bool %}
   {% for host in groups['postgres_cluster'] %}
-server {{ hostvars[host]['ansible_hostname'] }} {{ hostvars[host]['inventory_hostname'] }}:{{ pgbouncer_listen_port }} check port 8008
+server {{ hostvars[host]['ansible_hostname'] }} {{ hostvars[host]['ansible_default_ipv4'].address }}:{{ pgbouncer_listen_port }} check port 8008
   {% endfor %}
 {% endif %}
 {% if ( pgbouncer_install is not defined ) or ( not pgbouncer_install|bool ) %}
   {% for host in groups['postgres_cluster'] %}
-server {{ hostvars[host]['ansible_hostname'] }} {{ hostvars[host]['inventory_hostname'] }}:{{ postgresql_port }} check port 8008
+server {{ hostvars[host]['ansible_hostname'] }} {{ hostvars[host]['ansible_default_ipv4'].address }}:{{ postgresql_port }} check port 8008
   {% endfor %}
 {% endif %}
  
@@ -97,7 +97,7 @@ listen replicas_async
 {% if cluster_vip is defined and cluster_vip | length > 0 %}
     bind {{ cluster_vip }}:5003
 {% else %}
-    bind {{ hostvars[inventory_hostname]['inventory_hostname'] }}:5003
+    bind {{ hostvars[inventory_hostname]['ansible_default_ipv4'].address }}:5003
 {% endif %}
     maxconn 10000
     option tcplog
@@ -107,12 +107,12 @@ listen replicas_async
     default-server inter 3s fastinter 1s fall 3 rise 2 on-marked-down shutdown-sessions
 {% if pgbouncer_install|bool %}
   {% for host in groups['postgres_cluster'] %}
-server {{ hostvars[host]['ansible_hostname'] }} {{ hostvars[host]['inventory_hostname'] }}:{{ pgbouncer_listen_port }} check port 8008
+server {{ hostvars[host]['ansible_hostname'] }} {{ hostvars[host]['ansible_default_ipv4'].address }}:{{ pgbouncer_listen_port }} check port 8008
   {% endfor %}
 {% endif %}
 {% if ( pgbouncer_install is not defined ) or ( not pgbouncer_install|bool ) %}
   {% for host in groups['postgres_cluster'] %}
-server {{ hostvars[host]['ansible_hostname'] }} {{ hostvars[host]['inventory_hostname'] }}:{{ postgresql_port }} check port 8008
+server {{ hostvars[host]['ansible_hostname'] }} {{ hostvars[host]['ansible_default_ipv4'].address }}:{{ postgresql_port }} check port 8008
   {% endfor %}
 {% endif %}
 
